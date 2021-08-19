@@ -1,5 +1,5 @@
 {
-  "name": "piccir-react-sketch-canvas",
+  "name": "piccir-react-canvas-sketch",
   "version": "0.0.1",
   "description": "react-sketch-canvas - Freehand vector drawing tool for React using SVG as canvas",
   "author": "Sven Ahmed",
@@ -15,7 +15,7 @@
     "react-sketch"
   ],
   "dependencies": {
-    "immer": "^9.0.3",
+    "immer": "^9.0.3"
   },
   "peerDependencies": {
     "react": ">=16.4"
