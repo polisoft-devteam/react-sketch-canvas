@@ -10,7 +10,7 @@
           "executor": "@nrwl/web:package",
           "outputs": ["{options.outputPath}"],
           "options": {
-            "outputPath": "dist/libs/react-sketch-canvas",
+            "outputPath": "dist/libs/piccir-react-sketch-canvas",
             "tsConfig": "libs/react-sketch-canvas/tsconfig.lib.json",
             "project": "libs/react-sketch-canvas/package.json",
             "entryFile": "libs/react-sketch-canvas/src/index.ts",

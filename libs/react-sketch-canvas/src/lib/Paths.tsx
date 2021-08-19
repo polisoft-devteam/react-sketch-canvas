@@ -6,6 +6,7 @@ const svgPath = (
   id: string,
   strokeWidth: number,
   strokeColor: string,
+  strokeOpacity: number,
   command: (point: Point, i: number, a: Point[]) => string
 ): JSX.Element => {
   const d = paths.reduce(
@@ -21,6 +22,7 @@ const svgPath = (
       fill="none"
       strokeLinecap="round"
       stroke={strokeColor}
+      stroke-opacity={strokeOpacity}
       strokeWidth={strokeWidth}
     />
   );
@@ -109,6 +111,7 @@ const Paths = ({ paths }: PathProps): JSX.Element => (
         id.toString(),
         path.strokeWidth,
         path.strokeColor,
+        path.strokeOpacity,
         bezierCommand
       )
     )}

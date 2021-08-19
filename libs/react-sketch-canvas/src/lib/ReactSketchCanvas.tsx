@@ -11,6 +11,7 @@ const defaultProps = {
   className: "",
   canvasColor: "white",
   strokeColor: "red",
+  strokeOpacity: 1,
   background: "",
   strokeWidth: 4,
   eraserWidth: 8,
@@ -31,6 +32,7 @@ export type ReactSketchCanvasProps = {
   height: string;
   className: string;
   strokeColor: string;
+  strokeOpacity: number;
   canvasColor: string;
   background: string;
   strokeWidth: number;
@@ -136,6 +138,7 @@ export class ReactSketchCanvas extends React.Component<
     const {
       strokeColor,
       strokeWidth,
+      strokeOpacity,
       canvasColor,
       eraserWidth,
       withTimestamp,
@@ -150,6 +153,7 @@ export class ReactSketchCanvas extends React.Component<
           drawMode: draft.drawMode,
           strokeColor: draft.drawMode ? strokeColor : canvasColor,
           strokeWidth: draft.drawMode ? strokeWidth : eraserWidth,
+          strokeOpacity: strokeOpacity,
           paths: [point],
         };
 
