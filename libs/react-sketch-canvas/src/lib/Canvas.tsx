@@ -47,6 +47,7 @@ export type CanvasProps = {
   disabled: boolean;
   allowOnlyPointerType: string;
   style: React.CSSProperties;
+  viewBox?: string;
 };
 
 export class Canvas extends React.Component<CanvasProps> {
@@ -223,6 +224,7 @@ export class Canvas extends React.Component<CanvasProps> {
       background,
       style,
       paths,
+      viewBox,
     } = this.props;
 
     return (
@@ -250,6 +252,7 @@ export class Canvas extends React.Component<CanvasProps> {
             height: '100%',
             background: `${background} ${canvasColor}`,
           }}
+          viewBox={viewBox}
         >
           <g id="canvasPenStrokes">
             <Paths paths={paths} />

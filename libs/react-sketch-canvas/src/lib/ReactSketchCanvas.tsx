@@ -42,6 +42,7 @@ export type ReactSketchCanvasProps = {
   onUpdate: (updatedPaths: CanvasPath[]) => void;
   style: React.CSSProperties;
   withTimestamp: boolean;
+  viewBox?: string;
 };
 
 export type ReactSketchCanvasStates = {
@@ -362,7 +363,8 @@ export class ReactSketchCanvas extends React.Component<
       background,
       style,
       allowOnlyPointerType,
-      disabled
+      disabled,
+      viewBox
     } = this.props;
 
     const { currentPaths, isDrawing } = this.state;
@@ -383,6 +385,7 @@ export class ReactSketchCanvas extends React.Component<
         onPointerDown={this.handlePointerDown}
         onPointerMove={this.handlePointerMove}
         onPointerUp={this.handlePointerUp}
+        viewBox={viewBox}
       />
     );
   }
