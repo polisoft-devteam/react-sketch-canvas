@@ -44,6 +44,7 @@ export type CanvasProps = {
   height: string;
   canvasColor: string;
   background: string;
+  disabled: boolean;
   allowOnlyPointerType: string;
   style: React.CSSProperties;
 };
@@ -55,7 +56,6 @@ export class Canvas extends React.Component<CanvasProps> {
 
   constructor(props: CanvasProps) {
     super(props);
-
     this.handlePointerDown = this.handlePointerDown.bind(this);
     this.handlePointerMove = this.handlePointerMove.bind(this);
     this.handlePointerUp = this.handlePointerUp.bind(this);
@@ -100,10 +100,11 @@ export class Canvas extends React.Component<CanvasProps> {
   handlePointerDown(event: React.PointerEvent<HTMLDivElement>): void {
     // Allow only chosen pointer type
 
-    const { allowOnlyPointerType, onPointerDown } = this.props;
+    const { allowOnlyPointerType, onPointerDown, disabled } = this.props;
     if (
-      allowOnlyPointerType !== 'all' &&
-      event.pointerType !== allowOnlyPointerType
+      disabled ||
+      (allowOnlyPointerType !== 'all' &&
+        event.pointerType !== allowOnlyPointerType)
     ) {
       return;
     }
@@ -116,14 +117,20 @@ export class Canvas extends React.Component<CanvasProps> {
   }
 
   handlePointerMove(event: React.PointerEvent<HTMLDivElement>): void {
-    const { isDrawing, allowOnlyPointerType, onPointerMove } = this.props;
+    const {
+      isDrawing,
+      allowOnlyPointerType,
+      onPointerMove,
+      disabled,
+    } = this.props;
 
     if (!isDrawing) return;
 
     // Allow only chosen pointer type
     if (
-      allowOnlyPointerType !== 'all' &&
-      event.pointerType !== allowOnlyPointerType
+      disabled ||
+      (allowOnlyPointerType !== 'all' &&
+        event.pointerType !== allowOnlyPointerType)
     ) {
       return;
     }
@@ -139,10 +146,11 @@ export class Canvas extends React.Component<CanvasProps> {
     if (event.pointerType === 'mouse' && event.button !== 0) return;
 
     // Allow only chosen pointer type
-    const { allowOnlyPointerType, onPointerUp } = this.props;
+    const { allowOnlyPointerType, onPointerUp, disabled } = this.props;
     if (
-      allowOnlyPointerType !== 'all' &&
-      event.pointerType !== allowOnlyPointerType
+      disabled ||
+      (allowOnlyPointerType !== 'all' &&
+        event.pointerType !== allowOnlyPointerType)
     ) {
       return;
     }

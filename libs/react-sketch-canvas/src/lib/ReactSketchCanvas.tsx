@@ -33,6 +33,7 @@ export type ReactSketchCanvasProps = {
   className: string;
   strokeColor: string;
   strokeOpacity: number;
+  disabled: boolean;
   canvasColor: string;
   background: string;
   strokeWidth: number;
@@ -66,6 +67,7 @@ export class ReactSketchCanvas extends React.Component<
     resetStack: [],
     undoStack: [],
     currentPaths: [],
+    disabled: false,
   };
 
   constructor(props: ReactSketchCanvasProps) {
@@ -73,23 +75,24 @@ export class ReactSketchCanvas extends React.Component<
 
     this.state = this.initialState;
 
-    this.handlePointerDown = this.handlePointerDown.bind(this);
-    this.handlePointerMove = this.handlePointerMove.bind(this);
-    this.handlePointerUp = this.handlePointerUp.bind(this);
+  this.handlePointerDown = this.handlePointerDown.bind(this);
+  this.handlePointerMove = this.handlePointerMove.bind(this);
+  this.handlePointerUp = this.handlePointerUp.bind(this);
 
-    this.exportImage = this.exportImage.bind(this);
-    this.exportSvg = this.exportSvg.bind(this);
-    this.exportPaths = this.exportPaths.bind(this);
-    this.loadPaths = this.loadPaths.bind(this);
+  this.exportImage = this.exportImage.bind(this);
+  this.exportSvg = this.exportSvg.bind(this);
+  this.exportPaths = this.exportPaths.bind(this);
 
-    this.eraseMode = this.eraseMode.bind(this);
-    this.clearCanvas = this.clearCanvas.bind(this);
-    this.undo = this.undo.bind(this);
-    this.redo = this.redo.bind(this);
-    this.resetCanvas = this.resetCanvas.bind(this);
-    this.getSketchingTime = this.getSketchingTime.bind(this);
+  this.eraseMode = this.eraseMode.bind(this);
+  this.clearCanvas = this.clearCanvas.bind(this);
+  this.undo = this.undo.bind(this);
+  this.redo = this.redo.bind(this);
+  this.resetCanvas = this.resetCanvas.bind(this);
+  this.getSketchingTime = this.getSketchingTime.bind(this);
 
-    this.liftPathsUp = this.liftPathsUp.bind(this);
+  this.liftPathsUp = this.liftPathsUp.bind(this);
+  this.loadPaths = this.loadPaths.bind(this);
+
 
     this.svgCanvas = React.createRef();
   }
@@ -142,7 +145,12 @@ export class ReactSketchCanvas extends React.Component<
       canvasColor,
       eraserWidth,
       withTimestamp,
+      disabled
     } = this.props;
+
+    if(disabled) {
+      return;
+    }
 
     this.setState(
       produce((draft: ReactSketchCanvasStates) => {
@@ -173,8 +181,8 @@ export class ReactSketchCanvas extends React.Component<
 
   handlePointerMove(point: Point): void {
     const { isDrawing } = this.state;
-
-    if (!isDrawing) return;
+    const { disabled } = this.props;
+    if (!isDrawing || disabled) return;
 
     this.setState(
       produce((draft: ReactSketchCanvasStates) => {
@@ -186,11 +194,11 @@ export class ReactSketchCanvas extends React.Component<
   }
 
   handlePointerUp(): void {
-    const { withTimestamp } = this.props;
+    const { withTimestamp, disabled } = this.props;
 
     const { isDrawing } = this.state;
 
-    if (!isDrawing) {
+    if (!isDrawing || disabled) {
       return;
     }
 
@@ -354,6 +362,7 @@ export class ReactSketchCanvas extends React.Component<
       background,
       style,
       allowOnlyPointerType,
+      disabled
     } = this.props;
 
     const { currentPaths, isDrawing } = this.state;
@@ -370,6 +379,7 @@ export class ReactSketchCanvas extends React.Component<
         style={style}
         paths={currentPaths}
         isDrawing={isDrawing}
+        disabled={disabled}
         onPointerDown={this.handlePointerDown}
         onPointerMove={this.handlePointerMove}
         onPointerUp={this.handlePointerUp}
